@@ -1,0 +1,527 @@
+{
+  "type": "base",
+  "version": "10",
+  "dialect": "postgres",
+  "id": "05c04ab2-9510-49db-9c7b-157819587aad",
+  "prevIds": [
+    "00000000-0000-0000-0000-000000000000"
+  ],
+  "footprints": [
+    {
+      "statementType": "create_enum",
+      "statementTarget": [
+        "enum",
+        "public",
+        "ticket_status"
+      ],
+      "writes": [
+        "s|enum|public.ticket_status",
+        "n|enum|public.ticket_status",
+        "e|enum|public.ticket_status",
+        "n|type|public.ticket_status"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "replies"
+      ],
+      "writes": [
+        "s|tbl|public.replies",
+        "n|tbl|public.replies",
+        "e|tbl|public.replies",
+        "n|rel|public.replies",
+        "n|type|public.replies",
+        "n|rel|public.replies_pkey"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "teams"
+      ],
+      "writes": [
+        "s|tbl|public.teams",
+        "n|tbl|public.teams",
+        "e|tbl|public.teams",
+        "n|rel|public.teams",
+        "n|type|public.teams",
+        "n|rel|public.teams_pkey"
+      ],
+      "reads": [
+        "n|sch|public"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "public",
+        "tickets"
+      ],
+      "writes": [
+        "s|tbl|public.tickets",
+        "n|tbl|public.tickets",
+        "e|tbl|public.tickets",
+        "n|rel|public.tickets",
+        "n|type|public.tickets",
+        "n|rel|public.tickets_pkey"
+      ],
+      "reads": [
+        "n|sch|public",
+        "n|enum|public.ticket_status"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "public",
+        "replies",
+        "replies_ticket_id_idx"
+      ],
+      "writes": [
+        "s|idx|public.replies_ticket_id_idx",
+        "n|idx|public.replies_ticket_id_idx",
+        "e|idx|public.replies_ticket_id_idx",
+        "n|rel|public.replies_ticket_id_idx"
+      ],
+      "reads": [
+        "n|tbl|public.replies",
+        "n|sch|public",
+        "n|col|public.replies.ticket_id"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "public",
+        "tickets",
+        "tickets_team_id_updated_at_idx"
+      ],
+      "writes": [
+        "s|idx|public.tickets_team_id_updated_at_idx",
+        "n|idx|public.tickets_team_id_updated_at_idx",
+        "e|idx|public.tickets_team_id_updated_at_idx",
+        "n|rel|public.tickets_team_id_updated_at_idx"
+      ],
+      "reads": [
+        "n|tbl|public.tickets",
+        "n|sch|public",
+        "n|col|public.tickets.team_id",
+        "n|col|public.tickets.updated_at"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "replies"
+      ],
+      "writes": [
+        "s|fk|public.replies.replies_ticket_id_tickets_id_fkey",
+        "n|fk|public.replies.replies_ticket_id_tickets_id_fkey",
+        "e|fk|public.replies.replies_ticket_id_tickets_id_fkey",
+        "n|con|public.replies.replies_ticket_id_tickets_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.replies",
+        "n|sch|public",
+        "n|tbl|public.tickets",
+        "n|sch|public",
+        "n|col|public.replies.ticket_id",
+        "n|col|public.tickets.id",
+        "e|uniqueness|public.tickets.id"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "public",
+        "tickets"
+      ],
+      "writes": [
+        "s|fk|public.tickets.tickets_team_id_teams_id_fkey",
+        "n|fk|public.tickets.tickets_team_id_teams_id_fkey",
+        "e|fk|public.tickets.tickets_team_id_teams_id_fkey",
+        "n|con|public.tickets.tickets_team_id_teams_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|public.tickets",
+        "n|sch|public",
+        "n|tbl|public.teams",
+        "n|sch|public",
+        "n|col|public.tickets.team_id",
+        "n|col|public.teams.id",
+        "e|uniqueness|public.teams.id"
+      ]
+    }
+  ],
+  "ddl": [
+    {
+      "schema": "public",
+      "name": "replies",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "teams",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "tickets",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "public",
+      "name": "ticket_status",
+      "values": [
+        "open",
+        "pending",
+        "solved"
+      ],
+      "entityType": "enums"
+    },
+    {
+      "schema": "public",
+      "table": "replies",
+      "name": "id",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "replies_id_seq",
+        "increment": "1",
+        "startWith": "1",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "replies",
+      "name": "ticket_id",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "replies",
+      "name": "author",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "replies",
+      "name": "body",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "replies",
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "teams",
+      "name": "id",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "teams",
+      "name": "name",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tickets",
+      "name": "id",
+      "type": "integer",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": {
+        "type": "always",
+        "name": "tickets_id_seq",
+        "increment": "1",
+        "startWith": "1001",
+        "minValue": "1",
+        "maxValue": "2147483647",
+        "cache": 1,
+        "cycle": false
+      },
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tickets",
+      "name": "team_id",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tickets",
+      "name": "subject",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tickets",
+      "name": "body",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tickets",
+      "name": "customer_email",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tickets",
+      "name": "status",
+      "type": "ticket_status",
+      "typeSchema": "public",
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'open'",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tickets",
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "tickets",
+      "name": "updated_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "public",
+      "table": "replies",
+      "name": "replies_ticket_id_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "ticket_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "entityType": "indexes"
+    },
+    {
+      "schema": "public",
+      "table": "tickets",
+      "name": "tickets_team_id_updated_at_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "team_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        },
+        {
+          "value": "updated_at",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "entityType": "indexes"
+    },
+    {
+      "schema": "public",
+      "table": "replies",
+      "name": "replies_ticket_id_tickets_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "ticket_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "tickets",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "CASCADE",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "tickets",
+      "name": "tickets_team_id_teams_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "team_id"
+      ],
+      "schemaTo": "public",
+      "tableTo": "teams",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "NO ACTION",
+      "entityType": "fks"
+    },
+    {
+      "schema": "public",
+      "table": "replies",
+      "name": "replies_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "teams",
+      "name": "teams_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "public",
+      "table": "tickets",
+      "name": "tickets_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    }
+  ]
+}
